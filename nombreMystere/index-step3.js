@@ -10,8 +10,12 @@ function main(){
 	}
 
 	function demarrerPartie(){
-		tryLeft = prompt('Choisissez le nombre maximal de tentatives');
-		$('#tryAgain').html(tryLeft);
+		tryLeft1 = prompt('Choisissez le nombre maximal de tentatives');
+		$('#tryAgain1').html(tryLeft1);
+		tryLeft2 = tryLeft1 ;
+		//console.log(tryLeft2);
+		$('#tryAgain2').html(tryLeft2);
+		//console.log('after tryLeft2')
 
 		min = parseInt(prompt('Choisissez le nombre minimum du Nombre Mystère'));
 		$('#min').html(min);
@@ -26,12 +30,12 @@ function main(){
 	}
 
 	function partieGagnee(){
-		alert('Gagné ! Félicitations tu as trouvé le nombre mystère qui était ' + nombreMystere + ' !');
+		alert('Gagné ! Félicitations Joueur ' + currentPlayer +', tu as trouvé le nombre mystère qui était ' + nombreMystere + ' ! On relance !');
 		demarrerPartie();
 	}
 	
 	function partiePerdue(){
-		alert('Dommage, tu as épuisé toutes tes tentatives. Le nombre mystère était ' + nombreMystere +'.');
+		alert('Dommage, vous avez épuisé toutes vos tentatives. Le nombre mystère était ' + nombreMystere +'. On relance !');
 		demarrerPartie();
 	}
 
@@ -43,22 +47,42 @@ function main(){
 		}
 		else if (tryNow > nombreMystere) {
 			alert('Perdu, votre nombre est trop grand.');
-			tryLeft--; 
+			if(currentPlayer == 1){ // Changement de joueur
+				tryLeft1--;
+				currentPlayer = 2;
+			}
+			else if(currentPlayer == 2){
+				tryLeft2--;
+				currentPlayer = 1;
+			}
 		}
 		else if(tryNow < nombreMystere) {
 			alert('Perdu, votre nombre est trop petit.');
-			tryLeft--;
+			if(currentPlayer == 1){ //Changement de joueur
+				tryLeft1--;
+				currentPlayer = 2;
+			}
+			else if(currentPlayer == 2){
+				tryLeft2--;
+				currentPlayer = 1;
+			}
 		}
 
-		$('#tryAgain').html(tryLeft);
+		$('#tryAgain1').html(tryLeft1);
+		$('#tryAgain2').html(tryLeft2);
 	
-		 if(tryLeft === 0){
+		 if(tryLeft1 === 0 && tryLeft2 === 0){
 		 	partiePerdue();
 		}
 	}
 
 	demarrerPartie();
+	var currentPlayer = 1;
 	$('button').click(function(){
 		clickValider();
 	});
+
+
+
+
 }
